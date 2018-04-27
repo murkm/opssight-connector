@@ -104,6 +104,16 @@ kubectl create secret generic db-creds --from-literal=blackduck=blackduck123 --f
 
 3) Finally, edit the `HUB_POSTGRES_HOST` field in the `hub-db-config` configmap to match the DNS name or IP address of your external postgres host (alternatively, use a headless service for advanced users).  Use `kubectl edit cm` or `oc edit cm` to do this.
 
+4) Create the folowing config map in your namespace.
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hub-db-config-granular
+data:
+  HUB_POSTGRES_ENABLE_SSL: "false"
+```
+
 Your external database is now set up.  Move on to step 4 to install the hub.
 
 #### Step 4: Finally, create the hub app's containers.
